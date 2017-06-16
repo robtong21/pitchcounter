@@ -1,0 +1,14 @@
+export const SET_GAMES = 'SET_GAMES'
+export const SET_PLAYERS = 'SET_PLAYERS'
+export const SET_MY_TEAM = 'SET_MY_TEAM'
+
+export const SET_CURRENT_GAME = 'SET_CURRENT_GAME'
+export const SET_CURRENT_PITCHER = 'SET_CURRENT_PITCHER'
+export const SET_CURRENT_BATTER = 'SET_CURRENT_BATTER'
+
+export const SET_TEAMS = 'SET_TEAMS'
+
+export const SET_OPP_TEAM = 'SET_OPP_TEAM'
+export const SET_OPP_PLAYERS = 'SET_OPP_PLAYERS'
+export const SET_OPP_BATTER = 'SET_OPP_BATTER'
+export const SET_OPP_PITCHER = 'SET_OPP_PITCHER'

@@ -1,10 +1,10 @@
 'use strict'
 
 const db = require('APP/db')
-const User = db.model('users')
+const Game = db.model('games')
 const Team = db.model('teams')
 
-const {mustBeLoggedIn, forbidden} = require('./auth.filters')
+// const {mustBeLoggedIn, forbidden} = require('./auth.filters')
 
 module.exports = require('express').Router()
   .get('/',
@@ -16,21 +16,24 @@ module.exports = require('express').Router()
     // the concept of admin users.
     // forbidden('listing users is not allowed'),
     (req, res, next) =>
-      User.findAll({
-        include: [Team]
+      Game.findAll({
+        include: [ Team ]
       })
-        .then(users => res.json(users))
+        .then(games => {
+          console.log('games in server/games.js', games)
+          res.json(games)
+        })
         .catch(next))
   .post('/',
     (req, res, next) =>
-      User.create(req.body)
-      .then(user => res.status(201).json(user))
+      Game.create(req.body)
+      .then(game => res.status(201).json(game))
       .catch(next))
   .get('/:id',
     // mustBeLoggedIn,
     (req, res, next) =>
-      User.findOne({
+      Game.findOne({
         where: {id: req.params.id},
         include: [ Team ]})
-      .then(user => res.json(user))
+      .then(game => res.json(game))
       .catch(next))
