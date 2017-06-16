@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router'
-import Marquee from './Marquee'
+import PitcherStatsContainer from '../containers/PitcherStatsContainer'
+import BallsCounterContainer from '../containers/BallsCounterContainer'
+import { counterDefaultVal } from '../constants/counterDefaultVal'
 
 class Stats extends React.Component {
   constructor() {
@@ -8,13 +10,13 @@ class Stats extends React.Component {
     this.state = {
       pitcherStats: [],
       config: {
-        strikesTot: 0,
-        pitches: 0,
+        pitchesTotal: 0,
+        strikesTotal: 0,
         pitchesInn: 0,
-        balls: 0,
-        strikes: 0,
+        ballsCount: 0,
+        strikesCount: 0,
         outs: 0,
-        currInn: 0,
+        curInn: 0,
         ip: 0,
         batters: 0,
         hits: 0,
@@ -22,115 +24,111 @@ class Stats extends React.Component {
         bb: 0
       }
     }
+    console.log('counterDefaultVal', counterDefaultVal)
     this.increment = this.increment.bind(this)
     this.decrement = this.decrement.bind(this)
-    this.calculateStats = this.calculateStats.bind(this)
-    this.statsUpdate = this.statsUpdate.bind(this)
-    this.updateCounterState = this.updateCounterState.bind(this)
   }
-  // const stats = props.stats
-  const game = props.selectedGame
-  const player = props.selectedPlayer
-  const opponent = props.selectedOpponent
-  console.log('game', game)
-  console.log('player', player)
-  console.log('opponent', opponent)
-  console.log('props', props.pitcher)
 
   increment(e, title) {
-    e.preventDefault();
-    let currentValue, maxValue, step;
-    const { speed, temperature } = this.props.counterDefaultVal;
-    if (title === 'Speed') {
-      currentValue = this.state.config.speed;
-      maxValue = speed.max;
-      step = speed.step;
+    e.preventDefault()
+    let currentValue, maxValue, step
+    const { strikeConfig, ballConfig } = counterDefaultVal
+    if (title === 'Balls') {
+      currentValue = this.state.config.ballsCount
+      maxValue = ballConfig.max
+      step = ballConfig.step
     } else {
-      currentValue = this.state.config.temperature;
-      maxValue = temperature.max;
-      step = temperature.step;
+      currentValue = this.state.config.strikesCount
+      maxValue = strikeConfig.max
+      step = strikeConfig.step
     }
     if (currentValue < maxValue) {
-      const newValue = currentValue + step;
-      this.updateCounterState(title, newValue);
+      const newValue = currentValue + step
+      this.updateCounterState(title, newValue)
     }
   }
 
   decrement(e, title) {
-    e.preventDefault();
-    let currentValue, minValue, step;
-    const { speed, temperature } = this.props.counterDefaultVal;
-    if (title === 'Speed') {
-      currentValue = this.state.config.speed;
-      minValue = speed.min;
-      step = speed.step;
+    e.preventDefault()
+    let currentValue, minValue, step
+    const { strikeConfig, ballConfig } = counterDefaultVal
+    if (title === 'Balls') {
+      currentValue = this.state.config.ballsCount
+      minValue = ballConfig.min
+      step = ballConfig.step
     } else {
-      currentValue = this.state.config.temperature;
-      minValue = temperature.min;
-      step = temperature.step;
+      currentValue = this.state.config.strikesCount
+      minValue = strikeConfig.min
+      step = strikeConfig.step
     }
     if (currentValue > minValue) {
-      const newValue = currentValue - step;
-      this.updateCounterState(title, newValue);
+      const newValue = currentValue - step
+      this.updateCounterState(title, newValue)
     }
   }
 
-  calculateStats = (models, value) => {
-    const dataModels = getModelData();
-    return models.map(model => {
-      const { speed, temperature, climate, wheels } = value;
-      const miles = dataModels[model][wheels][climate ? 'on' : 'off'].speed[speed][temperature];
-      return {
-        model,
-        miles
-      };
-    });
-  }
+  // statsUpdate() {
+  //   const carModels = ['60', '60D', '75', '75D', '90D', 'P100D'];
+  //   // Fetch model info from BatteryService and calculate then update state
+  //   this.setState({
+  //     carstats: this.calculateStats(carModels, this.state.config)
+  //   })
+  // }
 
-  statsUpdate() {
-    const statCategories = ['1stPK', '3rdPK', 'IP', 'Batters', 'Hits', 'K', 'BB'];
-    // Fetch model info from BatteryService and calculate then update state
-    this.setState({
-      carstats: this.calculateStats(carModels, this.state.config)
-    })
-  }
-
-  handleChangeClicker() {
-    const config = {...this.state.config};
-    config['climate'] = !this.state.config.climate;
-    this.setState({ config }, () => {this.statsUpdate()});
-  }
-
-  componentDidMount() {
-    this.statsUpdate()
-  }
+  // componentDidMount() {
+  //   this.statsUpdate();
+  // }
 
   updateCounterState(title, newValue) {
-    const config = { ...this.state.config };
+    const config = { ...this.state.config }
     // update config state with new value
-    title === 'Speed' ? config['speed'] = newValue : config['temperature'] = newValue;
+    title === 'Balls' ? config['ballsCount'] = newValue : config['strikesCount'] = newValue
     // update our state
-    this.setState({ config }, () => {this.statsUpdate()});
+    this.setState({ config })
+    // this.setState({ config }, () => { this.statsUpdate() })
   }
 
   render() {
     const { config, pitcherStats } = this.state
+    const {selectedGame, selectedPlayer, selectedOpponent} = this.props
+
+    console.log('counterDefaultVal', counterDefaultVal)
     return (
-      <div className="marquee">
-        <Marquee />
-        <div className='controls'>
-          <button
-              onClick={(e) => props.increment(e, props.initValues.title)}
-              disabled={props.currentValue >= props.initValues.max}
-            >
-            </button>
-            <button
-              onClick={(e) => props.decrement(e, props.initValues.title)}
-              disabled={props.currentValue <= props.initValues.min}
-            >
-            </button>
+      <form className='stats'>
+        <div className="marquee">
+          <div>
+            <img src={selectedPlayer.photo} className="player-photo" />
+            <div className="player-id">
+              <div className="player-number">{selectedPlayer.number}</div>
+              <div className="player-name">{selectedPlayer.name}</div>
+              <div className="player-team">{selectedPlayer.team && selectedPlayer.team.name}</div>
+            </div>
+            <div className="opponent-team">{selectedOpponent.name}</div>
+          </div>
         </div>
-      </div>
+        <div className='counter'>
+          <div className="input-group spinner">
+            <input type="text" className="form-control" value={this.state.config.ballsCount} min="0" max="4"/>
+            <div className="input-group-btn-vertical">
+              <button className="btn btn-default" onClick={(e) => this.increment(e, counterDefaultVal.ballConfig.title)}
+            disabled={this.state.config.ballsCount >= counterDefaultVal.ballConfig.max} type="button"><i className="glyphicon glyphicon-menu-up"></i></button>
+              <button className="btn btn-default" onClick={(e) => this.decrement(e, counterDefaultVal.ballConfig.title)}
+            disabled={this.state.config.ballsCount <= counterDefaultVal.ballConfig.min} type="button"><i className="glyphicon glyphicon-menu-down"></i></button>
+            </div>
+          </div>
+          <div className="input-group spinner">
+            <input type="text" className="form-control" value={this.state.config.strikesCount} min="0" max="4"/>
+            <div className="input-group-btn-vertical">
+              <button className="btn btn-default" onClick={(e) => this.increment(e, counterDefaultVal.strikeConfig.title)}
+            disabled={this.state.config.strikesCount >= counterDefaultVal.strikeConfig.max} type="button"><i className="glyphicon glyphicon-menu-up"></i></button>
+              <button className="btn btn-default" onClick={(e) => this.decrement(e, counterDefaultVal.strikeConfig.title)}
+            disabled={this.state.config.strikesCount <= counterDefaultVal.strikeConfig.min} type="button"><i className="glyphicon glyphicon-menu-down"></i></button>
+            </div>
+            <div>{this.state.config.outs} outs</div>
+            <div>{this.state.config.curInn} inning</div>
+          </div>
+        </div>
+      </form>
     )
   }
 }

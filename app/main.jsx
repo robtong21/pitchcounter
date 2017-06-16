@@ -6,6 +6,7 @@ import {render} from 'react-dom'
 import {connect, Provider} from 'react-redux'
 
 import store from './store'
+import counterDefaultVal from './constants/counterDefaultVal'
 import Jokes from './components/Jokes'
 import Login from './components/Login'
 import Marquee from './components/Marquee'
@@ -61,7 +62,7 @@ render(
         <IndexRedirect to="/games" />
         <Route path="/games" component={GamesContainer} />
         <Route path="/games/:gameId" component={PlayersContainer} onEnter={afterSelectingGame} />
-        <Route path="/players/:playerId" component={StatsContainer} onEnter={afterSelectingPlayer} />
+        <Route path="/players/:playerId" counterDefaultVal={counterDefaultVal} component={StatsContainer} onEnter={afterSelectingPlayer} />
       </Route>
       <Route path='*' component={NotFound} />
     </Router>
