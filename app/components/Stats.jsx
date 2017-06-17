@@ -24,7 +24,6 @@ class Stats extends React.Component {
         bb: 0
       }
     }
-    console.log('counterDefaultVal', counterDefaultVal)
     this.increment = this.increment.bind(this)
     this.decrement = this.decrement.bind(this)
   }
@@ -32,40 +31,61 @@ class Stats extends React.Component {
   increment(e, title) {
     e.preventDefault()
     let currentValue, maxValue, step
+    const config = { ...this.state.config }
     const { strikeConfig, ballConfig } = counterDefaultVal
     if (title === 'Balls') {
       currentValue = this.state.config.ballsCount
       maxValue = ballConfig.max
-      step = ballConfig.step
     } else {
       currentValue = this.state.config.strikesCount
       maxValue = strikeConfig.max
-      step = strikeConfig.step
     }
     if (currentValue < maxValue) {
-      const newValue = currentValue + step
-      this.updateCounterState(title, newValue)
+      const newValue = currentValue + 1
+      title === 'Balls' ? config['ballsCount'] = newValue : config['strikesCount'] = newValue
+      config['pitchesTotal'] = newValue
+      config['pitchesInn'] = newValue
+      title === 'Strikes' ? config['strikesTotal'] = newValue : null
+      title === 'Strikes' ? config['strikesInn'] = newValue : null
+      this.setState({ config })
     }
   }
 
   decrement(e, title) {
     e.preventDefault()
     let currentValue, minValue, step
+    const config = { ...this.state.config }
     const { strikeConfig, ballConfig } = counterDefaultVal
     if (title === 'Balls') {
       currentValue = this.state.config.ballsCount
       minValue = ballConfig.min
-      step = ballConfig.step
     } else {
       currentValue = this.state.config.strikesCount
       minValue = strikeConfig.min
-      step = strikeConfig.step
     }
     if (currentValue > minValue) {
-      const newValue = currentValue - step
-      this.updateCounterState(title, newValue)
+      const newValue = currentValue - 1
+      title === 'Balls' ? config['ballsCount'] = newValue : config['strikesCount'] = newValue
+      config['pitchesTotal'] = newValue
+      config['pitchesInn'] = newValue
+      title === 'Strikes' ? config['strikesTotal'] = newValue : null
+      title === 'Strikes' ? config['strikesInn'] = newValue : null
+      this.setState({ config })
     }
   }
+
+  // calculateStats = (models, value) => {
+  //   return models.map(model => {
+  //     // ES6 Object destructuring Syntax,
+  //     // takes out required values and create references to them
+  //     const { speed, temperature, climate, wheels } = value;
+  //     const miles = dataModels[model][wheels][climate ? 'on' : 'off'].speed[speed][temperature];
+  //     return {
+  //       model,
+  //       miles
+  //     };
+  //   });
+  // }
 
   // statsUpdate() {
   //   const carModels = ['60', '60D', '75', '75D', '90D', 'P100D'];
@@ -79,20 +99,10 @@ class Stats extends React.Component {
   //   this.statsUpdate();
   // }
 
-  updateCounterState(title, newValue) {
-    const config = { ...this.state.config }
-    // update config state with new value
-    title === 'Balls' ? config['ballsCount'] = newValue : config['strikesCount'] = newValue
-    // update our state
-    this.setState({ config })
-    // this.setState({ config }, () => { this.statsUpdate() })
-  }
-
   render() {
     const { config, pitcherStats } = this.state
     const {selectedGame, selectedPlayer, selectedOpponent} = this.props
 
-    console.log('counterDefaultVal', counterDefaultVal)
     return (
       <form className='stats'>
         <div className="marquee">
