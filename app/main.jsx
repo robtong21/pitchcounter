@@ -49,12 +49,6 @@ const afterSelectingGame = (nextState) => {
   })
 }
 
-const afterSelectingPlayer = (nextState) => {
-  const playerId = nextState.params.playerId
-  console.log('playerId', playerId)
-  store.dispatch(setPitcherById(playerId))
-}
-
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
@@ -62,7 +56,7 @@ render(
         <IndexRedirect to="/games" />
         <Route path="/games" component={GamesContainer} />
         <Route path="/games/:gameId" component={PlayersContainer} onEnter={afterSelectingGame} />
-        <Route path="/players/:playerId" counterDefaultVal={counterDefaultVal} component={StatsContainer} onEnter={afterSelectingPlayer} />
+        <Route path="/players/:playerId" counterDefaultVal={counterDefaultVal} component={StatsContainer} />
       </Route>
       <Route path='*' component={NotFound} />
     </Router>

@@ -5,8 +5,8 @@ import { ballUp, ballDown } from '../action-creators/pitches'
 
 const mapStateToProps = (state) => {
   return {
-    currentValue: state.config.balls,
-    initValues: counterDefaultVal.balls
+    currentValue: state.config.ballsCount,
+    initValues: counterDefaultVal.ballConfig
   }
 }
 

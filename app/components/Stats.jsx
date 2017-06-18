@@ -26,13 +26,109 @@ class Stats extends React.Component {
     }
     this.increment = this.increment.bind(this)
     this.decrement = this.decrement.bind(this)
+    this.resetBallsStrikesCount = this.resetBallsStrikesCount.bind(this)
+    this.resetOuts = this.resetOuts.bind(this)
+    this.addPitch = this.addPitch.bind(this)
+    this.addStrike = this.addStrike.bind(this)
+    this.addBB = this.addBB.bind(this)
+    this.addK = this.addK.bind(this)
+    this.addOut = this.addOut.bind(this)
+    this.addCurInn = this.addCurInn.bind(this)
+    this.checkifBBorK = this.checkifBBorK.bind(this)
+  }
+
+  addBB() {
+    const config = { ...this.state.config }
+    let newBB = this.state.config.bb + 1
+    console.log('newBB', newBB)
+    config['bb'] = newBB
+    this.setState({ config })
+    console.log('this.state.config after addBB', config)
+  }
+
+  addK() {
+    const config = { ...this.state.config }
+    let newK = this.state.config.k + 1
+    config.k = newK
+    this.setState({ config })
+  }
+
+  addOut() {
+    const config = { ...this.state.config }
+    let newOuts = this.state.config.outs + 1
+    let newIP = this.state.config.ip + 0.1
+    let newPitchesInn = 0
+    let newStrikesInn = 0
+    config.outs = newOuts
+    if (newIP % 1 >= 0.25) Math.ceil(newIP)
+    if (newOuts >= 3) {
+      this.resetBallsStrikesCount()
+      this.resetOuts()
+      this.addCurInn()
+      config['pitchesInn'] = newPitchesInn
+      config['strikesInn'] = newStrikesInn
+    }
+    config.ip = newIP
+    this.setState({ config })
+    console.log('this.state.config after addOut', config)
+  }
+
+  addCurInn() {
+    const config = { ...this.state.config }
+    let newCurInn = this.state.config.curInn + 1
+    config.curInn = newCurInn
+    this.setState({ config })
+  }
+
+  resetBallsStrikesCount() {
+    const config = { ...this.state.config }
+    console.log('config at beg of resetBallsStrikes', config)
+    const newBallsCount = 0
+    const newStrikesCount = 0
+    config['ballsCount'] = newBallsCount
+    config['strikesCount'] = newStrikesCount
+    console.log('newBallsCount', newBallsCount)
+    console.log('newStrikesCount', newStrikesCount)
+    this.setState({ config })
+    console.log('this.state.config after resetBallsStrikesCount', config)
+  }
+
+  checkifBBorK() {
+
+  }
+
+  resetOuts() {
+    const config = { ...this.state.config }
+    let newOuts = 0
+    config.outs = newOuts
+    this.setState({ config })
+  }
+
+  addPitch() {
+    const config = { ...this.state.config }
+    const newPitchesTotal = this.state.config.pitchesTotal + 1
+    const newPitchesInn = this.state.config.pitchesInn + 1
+    config.pitchesTotal = newPitchesTotal
+    config.pitchesInn = newPitchesInn
+    this.setState({ config })
+  }
+
+  addStrike() {
+    const config = { ...this.state.config }
+    const newStrikesTotal = this.state.config.strikesTotal + 1
+    const newStrikesInn = this.state.config.strikesInn + 1
+    config.strikesTotal = newStrikesTotal
+    config.strikesInn = newStrikesInn
+    this.setState({ config })
   }
 
   increment(e, title) {
     e.preventDefault()
     let currentValue, maxValue, step
     const config = { ...this.state.config }
+    console.log('initial config', config)
     const { strikeConfig, ballConfig } = counterDefaultVal
+    let newValue
     if (title === 'Balls') {
       currentValue = this.state.config.ballsCount
       maxValue = ballConfig.max
@@ -41,13 +137,25 @@ class Stats extends React.Component {
       maxValue = strikeConfig.max
     }
     if (currentValue < maxValue) {
-      const newValue = currentValue + 1
+      newValue = currentValue + 1
+      console.log('newValue', newValue)
       title === 'Balls' ? config['ballsCount'] = newValue : config['strikesCount'] = newValue
       config['pitchesTotal'] = newValue
       config['pitchesInn'] = newValue
       title === 'Strikes' ? config['strikesTotal'] = newValue : null
       title === 'Strikes' ? config['strikesInn'] = newValue : null
       this.setState({ config })
+      console.log('config in increment', config)
+      if (title === 'Balls' && newValue.ballsCount >= 4) {
+        console.log('here!!!!!!!!!')
+        this.resetBallsStrikesCount()
+        this.addBB()
+        console.log('this.state.config after BB', config)
+      } else if (title === 'Strikes' && newValue >= 3) {
+        this.resetBallsStrikesCount()
+        this.addK()
+        console.log('this.state.config after K', config)
+      }
     }
   }
 
@@ -56,6 +164,7 @@ class Stats extends React.Component {
     let currentValue, minValue, step
     const config = { ...this.state.config }
     const { strikeConfig, ballConfig } = counterDefaultVal
+    let newValue
     if (title === 'Balls') {
       currentValue = this.state.config.ballsCount
       minValue = ballConfig.min
@@ -64,7 +173,7 @@ class Stats extends React.Component {
       minValue = strikeConfig.min
     }
     if (currentValue > minValue) {
-      const newValue = currentValue - 1
+      newValue = currentValue - 1
       title === 'Balls' ? config['ballsCount'] = newValue : config['strikesCount'] = newValue
       config['pitchesTotal'] = newValue
       config['pitchesInn'] = newValue

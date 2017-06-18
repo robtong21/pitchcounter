@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Players from '../components/Players'
 import { setOppTeam } from '../action-creators/opponents'
-import { setMyTeam } from '../action-creators/players'
+import { setMyTeam, setPitcherById } from '../action-creators/players'
 
 const mapStateToProps = (state) => {
   console.log('state in PlayersContainer', state)
@@ -19,7 +19,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setOpponent: (team) => dispatch(setOppTeam(team)),
-    setTeam: (teamName) => dispatch(setMyTeam(teamName))
+    setTeam: (teamName) => dispatch(setMyTeam(teamName)),
+    setPitcher: (pitcherId) => dispatch(setPitcherById(pitcherId))
   }
 }
 

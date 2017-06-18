@@ -1,4 +1,5 @@
 import React from 'react'
+import { counterDefaultVal } from '../constants/counterDefaultVal'
 
 const BallCounter = (props) => (
   <div className="counter">
@@ -12,7 +13,7 @@ const BallCounter = (props) => (
         <div className="counter__controls">
           <button
             onClick={(e) => props.increment(e, props.initValues.title)}
-            disabled={props.currentValue >= props.initValues.max}
+            disabled={props.currentValue >= counterDefaultVal.ballConfig.max}
           >
           </button>
           <button

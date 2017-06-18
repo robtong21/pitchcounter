@@ -15,7 +15,7 @@ const Players = (props) => {
       {list.map(player => {
         return (
           <div className="list-group-item" key={ player.id }>
-            <Link to={`/players/${player.id}`}><img src={player.photo} className="players-select-photo" />#{player.number} {player.name}</Link>
+            <Link to={`/players/${player.id}`} onClick={() => props.setPitcher(player.id)}><img src={player.photo} className="players-select-photo" />#{player.number} {player.name}</Link>
           </div>
         )
       })}
