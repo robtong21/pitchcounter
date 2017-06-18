@@ -15,7 +15,7 @@ module.exports = require('express').Router()
     // the concept of admin users.
     // forbidden('listing users is not allowed'),
     (req, res, next) =>
-      Stat.findAll()
+      Stats.findAll()
         .then(stats => {
           // console.log('stats in stats', stats)
           res.json(stats)
@@ -23,12 +23,12 @@ module.exports = require('express').Router()
         .catch(next))
   .post('/',
     (req, res, next) =>
-      Stat.create(req.body)
-      .then(stat => res.status(201).json(stat))
+      Stats.create(req.body)
+      .then(stats => res.status(201).json(stats))
       .catch(next))
   .get('/:id',
     // mustBeLoggedIn,
     (req, res, next) =>
-      Stat.findById(req.params.id)
+      Stats.findById(req.params.id)
       .then(stat => res.json(stat))
       .catch(next))

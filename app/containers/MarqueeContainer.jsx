@@ -3,9 +3,6 @@ import { connect } from 'react-redux'
 import Marquee from '../components/Marquee'
 
 const mapStateToProps = (state) => {
-  console.log('game', state.games.selected)
-  console.log('pitcher', state.players.pitcher)
-  console.log('opponent', state.opponents.team)
   return {
     game: state.games.selected,
     player: state.players.pitcher,

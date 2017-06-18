@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Controls from '../Components/Controls'
-import { addStrikeCalled, addStrikeSwung, addStrikeFouled, addBall, addHit, addOut, addRoe, addHbp } from '../action-creators/stats'
+import { addStrikeCalled, addStrikeSwung, addStrikeFouled, addBall, addHit, addOut, addRoe, addHbp, updateStats } from '../action-creators/stats'
 
 const mapStateToProps = (state) => {
-  console.log('games in ControlsContainer', state.games.list)
   return {
-    games: state.games.list,
+    game: state.games.selected,
+    pitcher: state.players.pitcher
   }
 }
 
@@ -35,6 +35,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     hbp: (e, pitcher, game) => {
       dispatch(addHbp(pitcher, game))
+    },
+    changePitcher: (e, pitcherId, gameId) => {
+      dispatch(updateStats(pitcherId, gameId))
     }
   }
 }

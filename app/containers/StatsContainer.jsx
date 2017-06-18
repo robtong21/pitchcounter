@@ -4,24 +4,26 @@ import Stats from '../components/Stats'
 import { ballUp, ballDown } from '../action-creators/pitches'
 
 const mapStateToProps = (state) => {
-  console.log('state', state)
-  console.log('selectedPitcher', state.players)
-  console.log('opponents', state.opponents)
   return {
-    selectedGame: state.games.selected,
-    selectedPlayer: state.players.pitcher,
-    selectedOpponent: state.opponents.team,
+    battersFaced: state.stats.pitcherStats.battersFaced,
+    totalPitches: state.stats.pitcherStats.totalPitches,
+    totalStrikes: state.stats.pitcherStats.totalStrikes,
+    strikesCalled: state.stats.pitcherStats.strikesCalled,
+    strikesSwung: state.stats.pitcherStats.strikesSwung,
+    strikesFouled: state.stats.pitcherStats.strikesFouled,
+    balls: state.stats.pitcherStats.balls,
+    K: state.stats.pitcherStats.K,
+    BB: state.stats.pitcherStats.BB,
+    hits: state.stats.pitcherStats.hits,
+    outs: state.stats.pitcherStats.outs,
+    HBP: state.stats.pitcherStats.HBP,
+    ROE: state.stats.pitcherStats.ROE,
+    IP: state.stats.pitcherStats.IP,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    increment: (value) => {
-      dispatch(ballUp(value))
-    },
-    decrement: (value) => {
-      dispatch(ballDown(value))
-    }
   }
 }
 

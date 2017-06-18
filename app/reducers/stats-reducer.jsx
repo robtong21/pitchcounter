@@ -13,6 +13,7 @@ export const initialState = {
     outs: 0,
     HBP: 0,
     ROE: 0,
+    IP: 0,
   },
   count: {
     strikes: 0,
@@ -38,123 +39,103 @@ export const initialState = {
 // }
 
 export default function (state=initialState, action) {
+  const newState = { ...state }
   switch(action.type) {
     case 'ADD_STRIKE_CALLED': {
-      const newState = { ...state,
-        pitcherStats: {
-          strikesCalled: state.pitcherStats.strikesCalled+1,
-          totalStrikes: state.pitcherStats.totalStrikes+1,
-          totalPitches: state.pitcherStats.totalPitches+1,
-        },
-        count: {
-          strikes: state.count.strikes+1
+      newState.pitcherStats.strikesCalled = state.pitcherStats.strikesCalled+1
+      newState.pitcherStats.totalStrikes = state.pitcherStats.totalStrikes+1
+      newState.pitcherStats.totalPitches = state.pitcherStats.totalPitches+1
+      newState.count.strikes = state.count.strikes+1
+      if (newState.count.strikes === 3) {
+        newState.count.strikes = 0
+        newState.count.balls = 0
+        newState.pitcherStats.K = state.pitcherStats.K+1
+        newState.pitcherStats.battersFaced = state.pitcherStats.battersFaced+1
+        newState.pitcherStats.outs = state.pitcherStats.outs+1
+        newState.pitcherStats.IP = state.pitcherStats.IP+0.1
+        if (newState.pitcherStats.IP % 1 > 0.25) {
+          Math.ceil(newState.pitcherStats.IP)
         }
       }
-      console.log('newState in reducer', newState)
+      return newState
+    }
+    case 'ADD_STRIKE_SWUNG': {
+      newState.pitcherStats.strikesSwung = state.pitcherStats.strikesSwung+1
+      newState.pitcherStats.totalStrikes = state.pitcherStats.totalStrikes+1
+      newState.pitcherStats.totalPitches = state.pitcherStats.totalPitches+1
+      newState.count.strikes = state.count.strikes+1
+      if (newState.count.strikes === 3) {
+        newState.count.strikes = 0
+        newState.count.balls = 0
+        newState.pitcherStats.K = state.pitcherStats.K+1
+        newState.pitcherStats.battersFaced = state.pitcherStats.battersFaced+1
+        newState.pitcherStats.outs = state.pitcherStats.outs+1
+        newState.pitcherStats.IP = state.pitcherStats.IP+0.1
+        if (newState.pitcherStats.IP % 1 > 0.25) {
+          Math.ceil(newState.pitcherStats.IP)
+        }
+      }
+      return newState
+    }
+    case 'ADD_STRIKE_FOULED': {
+      newState.pitcherStats.strikesFouled = state.pitcherStats.strikesFouled+1
+      newState.pitcherStats.totalStrikes = state.pitcherStats.totalStrikes+1
+      newState.pitcherStats.totalPitches = state.pitcherStats.totalPitches+1
+      if (newState.count.strikes < 2) newState.count.strikes = state.count.strikes+1
+      return newState
+    }
+    case 'ADD_BALL': {
+      newState.pitcherStats.totalPitches = state.pitcherStats.totalPitches+1
+      newState.pitcherStats.balls = state.pitcherStats.balls+1
+      newState.count.balls = state.count.balls+1
+      if (newState.count.balls === 4) {
+        newState.count.strikes = 0
+        newState.count.balls = 0
+        newState.pitcherStats.BB = state.pitcherStats.BB+1
+        newState.pitcherStats.battersFaced = state.pitcherStats.battersFaced+1
+      }
+      return newState
+    }
+    case 'ADD_HIT': {
+      newState.pitcherStats.totalStrikes = state.pitcherStats.totalStrikes+1
+      newState.pitcherStats.totalPitches = state.pitcherStats.totalPitches+1
+      newState.pitcherStats.battersFaced = state.pitcherStats.battersFaced+1
+      newState.pitcherStats.hits = state.pitcherStats.hits+1
+      newState.count.strikes = 0
+      newState.count.balls = 0
       return newState
       // return updateStats(state, newState)
     }
-    case 'ADD_STRIKE_SWUNG': {
-      const newState = { ...state,
-        pitcherStats: {
-          strikesSwung: state.pitcherStats.strikesSwung+1,
-          totalStrikes: state.pitcherStats.totalStrikes+1,
-          totalPitches: state.pitcherStats.totalPitches+1,
-        },
-        count: {
-          strikes: state.count.strikes+1
-        }
-      }
-      break
-      // return updateStats(state, newState)
-    }
-    case 'ADD_STRIKE_FOUL': {
-      const newState = { ...state,
-        pitcherStats: {
-          strikesFouled: state.pitcherStats.strikesFouled+1,
-          totalStrikes: state.pitcherStats.totalStrikes+1,
-          totalPitches: state.pitcherStats.totalPitches+1,
-        }
-      }
-      break
-      // return updateStats(state, newState)
-    }
-    case 'ADD_BALL': {
-      const newState = { ...state,
-        pitcherStats: {
-          totalPitches: state.pitcherStats.totalPitches+1,
-          balls: state.pitcherStats.balls+1,
-        },
-        count: {
-          strikes: state.count.strikes+1
-        }
-      }
-      break
-      // return updateStats(state, newState)
-    }
-    case 'ADD_HIT': {
-      const newState = { ...state,
-        pitcherStats: {
-          totalStrikes: state.pitcherStats.totalStrikes+1,
-          totalPitches: state.pitcherStats.totalPitches+1,
-          battersFaced: state.pitcherStats.battersFaced+1,
-          hits: state.pitcherStats.hits+1,
-        },
-        count: {
-          strikes: 0,
-          balls: 0
-        }
-      }
-      break
-      // return updateStats(state, newState)
-    }
     case 'ADD_OUT': {
-      const newState = { ...state,
-        pitcherStats: {
-          totalStrikes: state.pitcherStats.totalStrikes+1,
-          totalPitches: state.pitcherStats.totalPitches+1,
-          battersFaced: state.pitcherStats.battersFaced+1,
-          outs: state.pitcherStats.outs+1,
-        },
-        count: {
-          strikes: 0,
-          balls: 0
-        }
+      newState.pitcherStats.totalStrikes = state.pitcherStats.totalStrikes+1
+      newState.pitcherStats.totalPitches = state.pitcherStats.totalPitches+1
+      newState.pitcherStats.battersFaced = state.pitcherStats.battersFaced+1
+      newState.pitcherStats.outs = state.pitcherStats.outs+1
+      newState.count.strikes = 0
+      newState.count.balls = 0
+      newState.pitcherStats.IP = state.pitcherStats.IP+0.1
+      if (newState.pitcherStats.IP % 1 > 0.25) {
+        newState.pitcherStats.IP = Math.ceil(newState.pitcherStats.IP)
       }
-      break
-      // return updateStats(state, newState)
+      return newState
     }
     case 'ADD_ROE': {
-      const newState = { ...state,
-        pitcherStats: {
-          totalStrikes: state.pitcherStats.totalStrikes+1,
-          totalPitches: state.pitcherStats.totalPitches+1,
-          battersFaced: state.pitcherStats.battersFaced+1,
-          roe: state.pitcherStats.roe+1,
-        },
-        count: {
-          strikes: 0,
-          balls: 0
-        }
-      }
-      break
-      // return updateStats(state, newState)
+      newState.pitcherStats.totalStrikes = state.pitcherStats.totalStrikes+1
+      newState.pitcherStats.totalPitches = state.pitcherStats.totalPitches+1
+      newState.pitcherStats.battersFaced = state.pitcherStats.battersFaced+1
+      newState.pitcherStats.ROE = state.pitcherStats.ROE+1
+      newState.count.strikes = 0
+      newState.count.balls = 0
+      return newState
     }
     case 'ADD_HBP': {
-      const newState = { ...state,
-        pitcherStats: {
-          balls: state.pitcherStats.balls+1,
-          totalPitches: state.pitcherStats.totalPitches+1,
-          battersFaced: state.pitcherStats.battersFaced+1,
-          hbp: state.pitcherStats.hbp+1,
-        },
-        count: {
-          strikes: 0,
-          balls: 0
-        }
-      }
-      break
-      // return updateStats(state, newState)
+      newState.pitcherStats.balls = state.pitcherStats.balls+1
+      newState.pitcherStats.totalPitches = state.pitcherStats.totalPitches+1
+      newState.pitcherStats.battersFaced = state.pitcherStats.battersFaced+1
+      newState.pitcherStats.HBP = state.pitcherStats.HBP+1
+      newState.count.strikes = 0
+      newState.count.balls = 0
+      return newState
     }
     default: return state
   }

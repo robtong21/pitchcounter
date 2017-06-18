@@ -1,5 +1,4 @@
-import React from 'react';
-import './TeslaCounter.css';
+import React from 'react'
 
 const Counter = (props) => (
   <div className="tesla-counter">
@@ -25,6 +24,6 @@ const Counter = (props) => (
       </div>
     </div>
   </div>
-);
+)
 
-export default Counter;
+export default Counter

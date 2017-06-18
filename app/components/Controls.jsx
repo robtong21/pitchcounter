@@ -3,7 +3,7 @@ import React from 'react'
 const Controls = (props) => (
   <div className="tesla-counter__controls">
     <button className='btn btn-primary'
-      onClick={() => props.strikeCalled(e, props.pitcher, props.game)}
+      onClick={(e) => props.strikeCalled(e, props.pitcher, props.game)}
     >Strike Called
     </button>
     <button className='btn btn-primary'
@@ -35,10 +35,9 @@ const Controls = (props) => (
     >Hit By Pitch
     </button>
     <button className='btn btn-info'
-      onClick={(e) => props.changePitcher(e, props.pitcher, props.game)}
+      onClick={(e) => props.changePitcher(e, props.pitcher.id, props.game.id)}
     >Change Pitcher
     </button>
-    <button className='btn btn-danger'>Testing</button>
   </div>
 )
 

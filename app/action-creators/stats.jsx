@@ -11,56 +11,57 @@ export const addStrikeCalled = (value) => {
 export const addStrikeSwung = (value) => {
   return {
     type: 'ADD_STRIKE_SWUNG',
-    value
+    value: 1
   }
 }
 
 export const addStrikeFouled = (value) => {
   return {
     type: 'ADD_STRIKE_FOULED',
-    value
+    value: 1
   }
 }
 
 export const addBall = (value) => {
   return {
     type: 'ADD_BALL',
-    value
+    value: 1
   }
 }
 
 export const addHit = (value) => {
   return {
     type: 'ADD_HIT',
-    value
+    value: 1
   }
 }
 
 export const addOut = (value) => {
   return {
     type: 'ADD_OUT',
-    value
+    value: 1
   }
 }
 
 export const addRoe = (value) => {
   return {
-    type: 'ADD_BALL',
-    value
+    type: 'ADD_ROE',
+    value: 1
   }
 }
 
 export const addHbp = (value) => {
   return {
     type: 'ADD_HBP',
-    value
+    value: 1
   }
 }
 
-export const updateStats = statId => {
+export const updateStats = (playerId, gameId) => {
   return dispatch => {
-    axios.post(`/api/stats/`)
+    axios.post(`/api/stats/`, {game_id: gameId, user_id: playerId})
     .then(res => {
+      console.log('res in stats.jsx', res)
       dispatch(postPitcherGameStats(res.data))
     })
   }

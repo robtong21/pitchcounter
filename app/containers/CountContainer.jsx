@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import Count from '../components/Count'
 
 const mapStateToProps = (state) => {
-  console.log('state in CountContainer', state)
+  console.log('state', state)
   return {
-    // ballCount: state.count.balls,
-    // strikeCount: state.count.strikes
+    ballCount: state.stats.count.balls,
+    strikeCount: state.stats.count.strikes
   }
 }
 

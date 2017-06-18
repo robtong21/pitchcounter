@@ -105,3 +105,23 @@
   top: 0;
   left: 4px;
 }
+
+.order {
+  padding: 14px 18px;
+  border: 1px #ddd solid;
+}
+
+.order-header {
+  border-radius: 4px 4px 0 0;
+  background-color: #f6f6f6;
+  margin: 0px;
+}
+
+.order-body {
+  border-radius: 0 0 4px 4px;
+}
+
+.order-column {
+  margin-right: 10%;
+  float: left;
+}

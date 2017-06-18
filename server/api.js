@@ -9,6 +9,7 @@ api
   .use('/games', require('./games'))
   .use('/teams', require('./teams'))
   .use('/opponents', require('./opponents'))
+  .use('/stats', require('./stats'))
 
 // No routes matched? 404.
 api.use((req, res) => res.status(404).end())

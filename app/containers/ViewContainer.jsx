@@ -4,9 +4,6 @@ import View from '../components/View'
 
 
 const mapStateToProps = (state) => {
-  console.log('state', state)
-  console.log('selectedPitcher', state.players)
-  console.log('opponents', state.opponents)
   return {
     selectedGame: state.games.selected,
     selectedPlayer: state.players.pitcher,
