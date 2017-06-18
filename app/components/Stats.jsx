@@ -208,6 +208,10 @@ class Stats extends React.Component {
   //   this.statsUpdate();
   // }
 
+  componentWillUpdate() {
+
+  }
+
   render() {
     const { config, pitcherStats } = this.state
     const {selectedGame, selectedPlayer, selectedOpponent} = this.props

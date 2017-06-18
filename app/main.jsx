@@ -12,7 +12,7 @@ import Login from './components/Login'
 import Marquee from './components/Marquee'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
-import StatsContainer from './containers/StatsContainer'
+import ViewContainer from './containers/ViewContainer'
 import GamesContainer from './containers/GamesContainer'
 import PlayersContainer from './containers/PlayersContainer'
 import { setTeams } from './action-creators/teams'
@@ -56,7 +56,7 @@ render(
         <IndexRedirect to="/games" />
         <Route path="/games" component={GamesContainer} />
         <Route path="/games/:gameId" component={PlayersContainer} onEnter={afterSelectingGame} />
-        <Route path="/players/:playerId" counterDefaultVal={counterDefaultVal} component={StatsContainer} />
+        <Route path="/players/:playerId" counterDefaultVal={counterDefaultVal} component={ViewContainer} />
       </Route>
       <Route path='*' component={NotFound} />
     </Router>
