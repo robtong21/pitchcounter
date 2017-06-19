@@ -198,6 +198,29 @@ export default function(state=initialState, action) {
       newState.count.balls = 0
       return newState
     }
+    case 'CHANGE_PITCHER': {
+      newState.pitcherStats.battersFaced = 0
+      newState.pitcherStats.totalPitches = 0
+      newState.pitcherStats.totalStrikes = 0
+      newState.pitcherStats.strikesCalled = 0
+      newState.pitcherStats.strikesSwung = 0
+      newState.pitcherStats.strikesFouled = 0
+      newState.pitcherStats.firstPitchStrikes = 0
+      newState.pitcherStats.thirdPitchStrikes = 0
+      newState.pitcherStats.firstPitchStrikesOpp = 0
+      newState.pitcherStats.thirdPitchStrikesOpp = 0
+      newState.pitcherStats.balls = 0
+      newState.pitcherStats.K = 0
+      newState.pitcherStats.BB = 0
+      newState.pitcherStats.hits = 0
+      newState.pitcherStats.outs = 0
+      newState.pitcherStats.HBP = 0
+      newState.pitcherStats.ROE = 0
+      newState.pitcherStats.IP = 0
+      newState.count.strikes = 0
+      newState.count.balls = 0
+      return newState
+    }
     default: return state
   }
 }

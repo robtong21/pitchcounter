@@ -64,19 +64,12 @@ export const addHbp = (value) => {
   }
 }
 
-// export const updateStats = (playerId, gameId) => {
-//   return dispatch => {
-//     axios.post(`/api/stats/`, {
-//       battersFaced: 10,
-//       game_id: gameId,
-//       user_id: playerId
-//     })
-//     .then(res => {
-//       console.log('res.data in stats.jsx', res.data)
-//     })
-//     // .catch(error => console.error(error))
-//   }
-// }
+export const clearState = (stats) => {
+  return {
+    type: 'CHANGE_PITCHER',
+    stats
+  }
+}
 
 export const updateStats = (pitcherStats, pitcherId, gameId) => {
   return dispatch => {
@@ -86,6 +79,7 @@ export const updateStats = (pitcherStats, pitcherId, gameId) => {
       user_id: pitcherId})
     .then(res => {
       console.log('res.data in stats.jsx', res.data)
+      dispatch(clearState(res.data))
     })
     .catch(error => console.error(error))
   }
