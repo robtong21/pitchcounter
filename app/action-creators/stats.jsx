@@ -8,6 +8,13 @@ export const addStrikeCalled = (value) => {
   }
 }
 
+export const undoStrikeCalled = (value) => {
+  return {
+    type: 'UNDO_STRIKE_CALLED',
+    value: 1
+  }
+}
+
 export const addStrikeSwung = (value) => {
   return {
     type: 'ADD_STRIKE_SWUNG',

@@ -54,6 +54,33 @@ export default function(state=initialState, action) {
       }
       return newState
     }
+    case 'UNDO_STRIKE_CALLED': {
+      if (state.count.strikes === 1 && state.count.balls === 0) {
+        newState.pitcherStats.firstPitchStrikes = state.pitcherStats.firstPitchStrikes-1
+        newState.pitcherStats.firstPitchStrikesOpp = state.pitcherStats.firstPitchStrikesOpp-1
+      }
+      if (state.count.strikes + state.count.balls === 2) {
+        newState.pitcherStats.thirdPitchStrikes = state.pitcherStats.thirdPitchStrikes-1
+        newState.pitcherStats.thirdPitchStrikesOpp = state.pitcherStats.thirdPitchStrikesOpp-1
+      }
+      if (newState.count.strikes === 0 && newState.count.balls === 0) {
+        newState.count.strikes = 2
+        newState.count.balls = state.count.balls
+        newState.pitcherStats.K = state.pitcherStats.K-1
+        newState.pitcherStats.battersFaced = state.pitcherStats.battersFaced-1
+        newState.pitcherStats.outs = state.pitcherStats.outs-1
+        if (newState.pitcherStats.IP % 1 === 0) {
+          newState.pitcherStats.IP = newState.pitcherStats.IP-0.8
+        } else {
+          newState.pitcherStats.IP = state.pitcherStats.IP-0.1
+        }
+      }
+      newState.pitcherStats.strikesCalled = state.pitcherStats.strikesCalled-1
+      newState.pitcherStats.totalStrikes = state.pitcherStats.totalStrikes-1
+      newState.pitcherStats.totalPitches = state.pitcherStats.totalPitches-1
+      newState.count.strikes = state.count.strikes-1
+      return newState
+    }
     case 'ADD_STRIKE_SWUNG': {
       if (state.count.strikes + state.count.balls === 0) {
         newState.pitcherStats.firstPitchStrikes = state.pitcherStats.firstPitchStrikes+1

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Controls from '../Components/Controls'
-import { addStrikeCalled, addStrikeSwung, addStrikeFouled, addBall, addHit, addOut, addRoe, addHbp, updateStats } from '../action-creators/stats'
+import { addStrikeCalled, undoStrikeCalled, addStrikeSwung, addStrikeFouled, addBall, addHit, addOut, addRoe, addHbp, updateStats } from '../action-creators/stats'
 
 const mapStateToProps = (state) => {
   return {
@@ -39,7 +39,11 @@ const mapDispatchToProps = (dispatch) => {
     },
     changePitcher: (e, stats, pitcherId, gameId) => {
       dispatch(updateStats(stats, pitcherId, gameId))
-    }
+    },
+    undoStrikeCalled: (e, pitcher, game) => {
+      dispatch(undoStrikeCalled(pitcher, game))
+    },
+
   }
 }
 
