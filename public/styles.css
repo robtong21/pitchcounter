@@ -91,7 +91,7 @@ strong {
   float: left;
 }
 
-.players-select-photo {
+.players-select-photo, .team-select-photo {
   width: 6rem;
   border-radius: 3rem;
   margin-right: 15px;

@@ -13,7 +13,7 @@ const Stats = ({battersFaced, totalPitches, totalStrikes, strikesCalled, strikes
             <div className="player center">{strikesCalled}</div>
         </div>
         <div className="order-column text-center">
-            <div><strong>Strikes<br/>Swung & Missed</strong></div>
+            <div><strong>Strikes<br/>Swung/Missed</strong></div>
             <div className="player center">{strikesSwung}</div>
         </div>
         <div className="order-column text-center">

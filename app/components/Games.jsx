@@ -13,7 +13,7 @@ const Games = (props) => {
         {list.map(game => {
           return (
             <div className="list-group-item" key={ game.id }>
-              <Link to={`/games/${game.id}`}>{moment(game.date).utc().format('MMMM D, YYYY')}, {game.time} at {game.location} vs {game.team.name}</Link>
+              <Link to={`/games/${game.id}`}><img src={game.team.logo} className="team-select-photo"/>{moment(game.date).utc().format('MMMM D, YYYY')}, {game.time} at {game.location} vs {game.team.name}</Link>
             </div>
           )
         })}
