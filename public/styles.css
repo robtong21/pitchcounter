@@ -4,6 +4,10 @@ h1 {
   -webkit-margin-before: 0;
 }
 
+strong {
+  color: white
+}
+
 .raleway {
   font-family: 'Raleway', sans-serif;
 }
@@ -46,11 +50,11 @@ h1 {
 }
 
 .marquee {
-  background-color: green
+  background-color: gray
 }
 
 .container {
-  background-color: lightgray
+  background-color: green
 }
 
 .players-selection {
@@ -63,6 +67,7 @@ h1 {
 
 .row {
   margin: 0;
+  background-color: gray;
 }
 
 .bold {
@@ -78,6 +83,7 @@ h1 {
 .player-photo {
   width: 14rem;
   float: right;
+  /*-webkit-box-reflect: below 10px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, 0.1)));*/
 }
 
 .team-logo {
@@ -93,6 +99,7 @@ h1 {
 
 .player {
   font-size: 4.5rem;
+  color: #f2ae43
 }
 
 .player-team {
@@ -105,21 +112,26 @@ h1 {
   color: white;
 }
 
+.now-pitching {
+  color: #f2ae43
+}
+
 .opponent-logo {
   width: 6rem;
   margin: auto 0;
   padding-bottom: 15px;
+  float: right;
 }
 
 .strikes {
   font-size: 7rem;
-  color: goldenrod;
+  color: #f2ae43;
   vertical-align: bottom;
 }
 
 .pitches {
   font-size: 9rem;
-  color: darkgoldenrod;
+  color: #f2ae43;
   vertical-align: bottom;
   padding: 0 15px;
 }
@@ -162,14 +174,24 @@ h1 {
   left: 4px;
 }
 
+.left-main-stats-container {
+  padding: 14px 30px;
+  border: 1px #ddd solid;
+}
+
+.right-main-stats-container {
+  padding: 14px 100px;
+  border: 1px #ddd solid;
+}
+
 .order {
-  padding: 14px 18px;
+  padding: 14px 40px;
   border: 1px #ddd solid;
 }
 
 .order-header {
   border-radius: 4px 4px 0 0;
-  background-color: #f6f6f6;
+  background-color: ##e6e6e6;
   margin: 0px;
 }
 
@@ -180,4 +202,23 @@ h1 {
 .order-column {
   margin-right: 10%;
   float: left;
+}
+
+.right-main-stats-column {
+  margin: 0 15%;
+  float: left;
+}
+
+#container {
+    display: flex;           /* establish flex container */
+    flex-direction: column;  /* make main axis vertical */
+    justify-content: center; /* center items vertically, in this case */
+    align-items: center;     /* center items horizontally, in this case */
+    height: 300px;
+}
+
+.box {
+    width: 100px;
+    margin: 5px;
+    text-align: center;     /* will center text in <p>, which is not a flex item */
 }

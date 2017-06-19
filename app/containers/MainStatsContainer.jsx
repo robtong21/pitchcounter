@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import MainStats from '../components/MainStats'
-import { ballUp, ballDown } from '../action-creators/pitches'
 
 const mapStateToProps = (state) => {
   return {

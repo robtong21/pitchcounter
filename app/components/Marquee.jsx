@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 
 const Marquee = (props) => {
   const { player, opponent, game } = props
@@ -18,8 +19,18 @@ const Marquee = (props) => {
         </div>
       </div>
       <div className="row">
-        <div className="col-md-12 text-center opponent-team">Now pitching vs.</div>
-        <div className="col-md-12 text-center opponent-team"><img src={opponent.logo} className="opponent-logo"/> the {opponent.name}</div>
+        <div className="col-md-12 text-center opponent-team"><span className="now-pitching">Now pitching</span><br/>
+        {moment(game.date).format('LL')} at {game.location}
+        </div>
+        <div className="row">
+          <div className="col-md-6">
+            <img src={opponent.logo} className="opponent-logo"/>
+          </div>
+          <div className="col-md-6 player-id">
+            <div className="white">vs.</div>
+            <div className="opponent-team"> the {opponent.name}</div>
+          </div>
+        </div>
         {/* <div className="pitches">
           <div className="pitches-total">{stats.totalPitches}</div>
           <div className="stats-innPitches">{stats.currInnPitches}</div>

@@ -10,7 +10,7 @@ const Players = (props) => {
   props.setOpponent(props.opponent)
   return (
     <div className='gray'>
-      <h1 className='white players-selection'>Select a player</h1>
+      <h1 className='players-selection'>Select a player</h1>
       <div className='col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2'>
         <ul>
         {list.map(player => {
