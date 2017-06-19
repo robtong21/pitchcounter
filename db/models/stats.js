@@ -9,6 +9,10 @@ module.exports = db => db.define('stats', {
   strikesCalled: INTEGER,
   strikesSwung: INTEGER,
   strikesFouled: INTEGER,
+  firstPitchStrikes: INTEGER,
+  thirdPitchStrikes: INTEGER,
+  firstPitchStrikesOpp: INTEGER,
+  thirdPitchStrikesOpp: INTEGER,
   balls: INTEGER,
   K: INTEGER,
   BB: INTEGER,
@@ -17,8 +21,6 @@ module.exports = db => db.define('stats', {
   HBP: INTEGER,
   ROE: INTEGER,
   IP: INTEGER,
-  firstPitchStrikes: INTEGER,
-  thirdPitchStrikes: INTEGER,
 })
 
 module.exports.associations = (Stats, {Game, User}) => {

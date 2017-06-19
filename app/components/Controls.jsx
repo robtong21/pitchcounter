@@ -35,7 +35,7 @@ const Controls = (props) => (
     >Hit By Pitch
     </button>
     <button className='btn btn-info'
-      onClick={(e) => props.changePitcher(e, props.pitcher.id, props.game.id)}
+      onClick={(e) => props.changePitcher(e, props.stats, props.pitcher.id, props.game.id)}
     >Change Pitcher
     </button>
   </div>

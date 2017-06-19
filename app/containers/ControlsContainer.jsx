@@ -6,7 +6,8 @@ import { addStrikeCalled, addStrikeSwung, addStrikeFouled, addBall, addHit, addO
 const mapStateToProps = (state) => {
   return {
     game: state.games.selected,
-    pitcher: state.players.pitcher
+    pitcher: state.players.pitcher,
+    stats: state.stats.pitcherStats,
   }
 }
 
@@ -36,8 +37,8 @@ const mapDispatchToProps = (dispatch) => {
     hbp: (e, pitcher, game) => {
       dispatch(addHbp(pitcher, game))
     },
-    changePitcher: (e, pitcherId, gameId) => {
-      dispatch(updateStats(pitcherId, gameId))
+    changePitcher: (e, stats, pitcherId, gameId) => {
+      dispatch(updateStats(stats, pitcherId, gameId))
     }
   }
 }

@@ -6,6 +6,10 @@ export const initialState = {
     strikesCalled: 0,
     strikesSwung: 0,
     strikesFouled: 0,
+    firstPitchStrikes: 0,
+    thirdPitchStrikes: 0,
+    firstPitchStrikesOpp: 0,
+    thirdPitchStrikesOpp: 0,
     balls: 0,
     K: 0,
     BB: 0,
@@ -21,27 +25,18 @@ export const initialState = {
   }
 }
 
-// function updateStats(state, newState) {
-//   return {
-//     ...state,
-//     pitcherStats: calculateStats(newState)
-//   }
-// }
-
-// function calculateStats(state) {
-//   const models = ['60', '60D', '75', '75D', '90D', 'P100D']
-//   const dataModels = getModelData()
-//   return models.map(model => {
-//     const { speed, temperature, climate, wheels } = state.pitcherStats;
-//     const miles = dataModels[model][wheels][climate ? 'on' : 'off'].speed[speed][temperature]
-//     return { model, miles }
-//   })
-// }
-
-export default function (state=initialState, action) {
+export default function(state=initialState, action) {
   const newState = { ...state }
-  switch(action.type) {
+  switch (action.type) {
     case 'ADD_STRIKE_CALLED': {
+      if (state.count.strikes + state.count.balls === 0) {
+        newState.pitcherStats.firstPitchStrikes = state.pitcherStats.firstPitchStrikes+1
+        newState.pitcherStats.firstPitchStrikesOpp = state.pitcherStats.firstPitchStrikesOpp+1
+      }
+      if (state.count.strikes + state.count.balls === 2) {
+        newState.pitcherStats.thirdPitchStrikes = state.pitcherStats.thirdPitchStrikes+1
+        newState.pitcherStats.thirdPitchStrikesOpp = state.pitcherStats.thirdPitchStrikesOpp+1
+      }
       newState.pitcherStats.strikesCalled = state.pitcherStats.strikesCalled+1
       newState.pitcherStats.totalStrikes = state.pitcherStats.totalStrikes+1
       newState.pitcherStats.totalPitches = state.pitcherStats.totalPitches+1
@@ -60,6 +55,14 @@ export default function (state=initialState, action) {
       return newState
     }
     case 'ADD_STRIKE_SWUNG': {
+      if (state.count.strikes + state.count.balls === 0) {
+        newState.pitcherStats.firstPitchStrikes = state.pitcherStats.firstPitchStrikes+1
+        newState.pitcherStats.firstPitchStrikesOpp = state.pitcherStats.firstPitchStrikesOpp+1
+      }
+      if (state.count.strikes + state.count.balls === 2) {
+        newState.pitcherStats.thirdPitchStrikes = state.pitcherStats.thirdPitchStrikes+1
+        newState.pitcherStats.thirdPitchStrikesOpp = state.pitcherStats.thirdPitchStrikesOpp+1
+      }
       newState.pitcherStats.strikesSwung = state.pitcherStats.strikesSwung+1
       newState.pitcherStats.totalStrikes = state.pitcherStats.totalStrikes+1
       newState.pitcherStats.totalPitches = state.pitcherStats.totalPitches+1
@@ -78,6 +81,14 @@ export default function (state=initialState, action) {
       return newState
     }
     case 'ADD_STRIKE_FOULED': {
+      if (state.count.strikes + state.count.balls === 0) {
+        newState.pitcherStats.firstPitchStrikes = state.pitcherStats.firstPitchStrikes+1
+        newState.pitcherStats.firstPitchStrikesOpp = state.pitcherStats.firstPitchStrikesOpp+1
+      }
+      if (state.count.strikes + state.count.balls === 2) {
+        newState.pitcherStats.thirdPitchStrikes = state.pitcherStats.thirdPitchStrikes+1
+        newState.pitcherStats.thirdPitchStrikesOpp = state.pitcherStats.thirdPitchStrikesOpp+1
+      }
       newState.pitcherStats.strikesFouled = state.pitcherStats.strikesFouled+1
       newState.pitcherStats.totalStrikes = state.pitcherStats.totalStrikes+1
       newState.pitcherStats.totalPitches = state.pitcherStats.totalPitches+1
@@ -97,6 +108,14 @@ export default function (state=initialState, action) {
       return newState
     }
     case 'ADD_HIT': {
+      if (state.count.strikes + state.count.balls === 0) {
+        newState.pitcherStats.firstPitchStrikes = state.pitcherStats.firstPitchStrikes+1
+        newState.pitcherStats.firstPitchStrikesOpp = state.pitcherStats.firstPitchStrikesOpp+1
+      }
+      if (state.count.strikes + state.count.balls === 2) {
+        newState.pitcherStats.thirdPitchStrikes = state.pitcherStats.thirdPitchStrikes+1
+        newState.pitcherStats.thirdPitchStrikesOpp = state.pitcherStats.thirdPitchStrikesOpp+1
+      }
       newState.pitcherStats.totalStrikes = state.pitcherStats.totalStrikes+1
       newState.pitcherStats.totalPitches = state.pitcherStats.totalPitches+1
       newState.pitcherStats.battersFaced = state.pitcherStats.battersFaced+1
@@ -104,9 +123,16 @@ export default function (state=initialState, action) {
       newState.count.strikes = 0
       newState.count.balls = 0
       return newState
-      // return updateStats(state, newState)
     }
     case 'ADD_OUT': {
+      if (state.count.strikes + state.count.balls === 0) {
+        newState.pitcherStats.firstPitchStrikes = state.pitcherStats.firstPitchStrikes+1
+        newState.pitcherStats.firstPitchStrikesOpp = state.pitcherStats.firstPitchStrikesOpp+1
+      }
+      if (state.count.strikes + state.count.balls === 2) {
+        newState.pitcherStats.thirdPitchStrikes = state.pitcherStats.thirdPitchStrikes+1
+        newState.pitcherStats.thirdPitchStrikesOpp = state.pitcherStats.thirdPitchStrikesOpp+1
+      }
       newState.pitcherStats.totalStrikes = state.pitcherStats.totalStrikes+1
       newState.pitcherStats.totalPitches = state.pitcherStats.totalPitches+1
       newState.pitcherStats.battersFaced = state.pitcherStats.battersFaced+1
@@ -120,6 +146,14 @@ export default function (state=initialState, action) {
       return newState
     }
     case 'ADD_ROE': {
+      if (state.count.strikes + state.count.balls === 0) {
+        newState.pitcherStats.firstPitchStrikes = state.pitcherStats.firstPitchStrikes+1
+        newState.pitcherStats.firstPitchStrikesOpp = state.pitcherStats.firstPitchStrikesOpp+1
+      }
+      if (state.count.strikes + state.count.balls === 2) {
+        newState.pitcherStats.thirdPitchStrikes = state.pitcherStats.thirdPitchStrikes+1
+        newState.pitcherStats.thirdPitchStrikesOpp = state.pitcherStats.thirdPitchStrikesOpp+1
+      }
       newState.pitcherStats.totalStrikes = state.pitcherStats.totalStrikes+1
       newState.pitcherStats.totalPitches = state.pitcherStats.totalPitches+1
       newState.pitcherStats.battersFaced = state.pitcherStats.battersFaced+1
